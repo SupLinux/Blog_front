@@ -3,6 +3,8 @@ import "../css/login.css";
 import UserService from '../service/user';
 import { BrowserRouter as Router, Route, Link, Redirect} from "react-router-dom";
 import {observer} from "mobx-react"
+import { message} from "antd";
+import "antd/lib/message/style";
 
 const service = new UserService();
 
@@ -20,6 +22,11 @@ class _Login extends React.Component {
         this.props.service.login(fm[0].value, fm[1].value, this);
     }
     render () {
+        if (this.props.service.errMsg){
+            message.info(this.props.service.errMsg, 3, ()=> {
+                    this.props.service.errMsg = '';
+                });
+            }
         if (this.props.service.loggedin){
             return (<Redirect to="/about" />);
         }

@@ -2,8 +2,10 @@ import React from 'react';
 import "../css/login.css";
 import UserService from '../service/user';
 import { Link } from 'react-router-dom';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { Redirect } from 'react-router';
+import { message} from "antd";
+import "antd/lib/message/style";
 
 const service = new UserService()
 
@@ -12,7 +14,8 @@ export default class Reg extends React.Component {
         return <_Reg service={service} />;
     }
 }
-
+// const inject = obj => Comp => props => <Comp {...obj} {...props} />
+// @inject({service})
 @observer
 class _Reg extends React.Component {
     handleClick(event) {
@@ -21,6 +24,11 @@ class _Reg extends React.Component {
         this.props.service.reg(fm[1].value, fm[2].value, fm[0].value);
     }
     render () {
+        if (this.props.service.errMsg){
+            message.info(this.props.service.errMsg, 3, ()=> {
+                    this.props.service.errMsg = '';
+                });
+        }
         if (this.props.service.loggedin){
             return (<Redirect to='/' />);
         }
