@@ -9,6 +9,7 @@ store.addPlugin(require('store/plugins/expire')) //过期插件
 export default class UserService {
     @observable loggedin = false ;
     @observable reggged = false ;
+    @observable errMsg = false ;
     //登录
     login (email, password) {
         Axios.post("/api/user/login",{
@@ -19,7 +20,7 @@ export default class UserService {
         this.loggedin = true;
     }).catch( error => {
         console.log(error);
-        this.error = "用户名或者密码错误";
+        this.errMsg = "用户名或者密码错误";
     });
     }
 
@@ -33,7 +34,7 @@ export default class UserService {
             this.loggedin = true;
         }).catch( error => {
             console.log(error);
-            this.error = "请检查数据";
+            this.errMsg = "请检查数据";
     });
     }
     

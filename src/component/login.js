@@ -5,17 +5,17 @@ import { BrowserRouter as Router, Route, Link, Redirect} from "react-router-dom"
 import {observer} from "mobx-react"
 import { message} from "antd";
 import "antd/lib/message/style";
-
+import { inject } from "../utils";
 const service = new UserService();
 
-export default class Login extends React.Component {
-    render () {
-        return <_Login service={service} />;
-    }
-}
-
+// export default class Login extends React.Component {
+//     render () {
+//         return <_Login service={service} />;
+//     }
+// }
+@inject({service})
 @observer
-class _Login extends React.Component {
+export default class Login extends React.Component {
     handleClick(event) {
         event.preventDefault();
         let fm = event.target.form;
